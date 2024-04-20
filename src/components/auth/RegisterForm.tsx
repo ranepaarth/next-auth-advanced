@@ -15,6 +15,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { RegisterSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Loader2 } from 'lucide-react';
 import React, { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -104,8 +105,12 @@ export function RegisterForm() {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button type='submit' className='w-full'>
-            Create Account
+          <Button type='submit' className='w-full' disabled={isPending}>
+            {isPending ? (
+              <Loader2 className='h-4 w-4 animate-spin' />
+            ) : (
+              'Create Account'
+            )}
           </Button>
         </form>
       </Form>
