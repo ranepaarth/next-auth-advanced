@@ -1,9 +1,9 @@
 'use client';
 import { loginAction } from '@/actions/login';
 import { CardWrapper } from '@/components/auth/CardWrapper';
+import { FormBtn } from '@/components/FormBtn';
 import { FormError } from '@/components/FormError';
 import { FormSuccess } from '@/components/FormSuccess';
-import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -86,9 +86,7 @@ export function LoginForm() {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button type='submit' className='w-full'>
-            Log In
-          </Button>
+          <FormBtn isPending={isPending} text={'Log In'} />
         </form>
       </Form>
     </CardWrapper>

@@ -1,9 +1,9 @@
 'use client';
 import { registerAction } from '@/actions/register';
 import { CardWrapper } from '@/components/auth/CardWrapper';
+import { FormBtn } from '@/components/FormBtn';
 import { FormError } from '@/components/FormError';
 import { FormSuccess } from '@/components/FormSuccess';
-import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -15,7 +15,6 @@ import {
 import { Input } from '@/components/ui/input';
 import { RegisterSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2 } from 'lucide-react';
 import React, { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
@@ -38,8 +37,8 @@ export function RegisterForm() {
     setSuccess('');
     startTransition(() =>
       registerAction(values).then(data => {
-        setError(data.error);
-        setSuccess(data.success);
+        setError(data?.error);
+        setSuccess(data?.success);
       }),
     );
   };
@@ -105,13 +104,7 @@ export function RegisterForm() {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button type='submit' className='w-full' disabled={isPending}>
-            {isPending ? (
-              <Loader2 className='h-4 w-4 animate-spin' />
-            ) : (
-              'Create Account'
-            )}
-          </Button>
+          <FormBtn isPending={isPending} text='Create Account' />
         </form>
       </Form>
     </CardWrapper>
