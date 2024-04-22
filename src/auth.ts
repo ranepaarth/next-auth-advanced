@@ -1,11 +1,21 @@
 import authConfig from '@/auth.config';
 import { db } from '@/lib/db';
 import { PrismaAdapter } from '@auth/prisma-adapter';
+import { UserRole } from '@prisma/client';
 import NextAuth from 'next-auth';
 import { getUserById } from './utils/user';
-import { UserRole } from '@prisma/client';
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
+  events: {
+    async linkAccount({ user }) {
+      await db.user.update({
+        where: {
+          id: user.id,
+        },
+        data: { emailVerified: new Date() },
+      });
+    },
+  },
   callbacks: {
     session: async ({ session, token }) => {
       if (!token.sub || !session.user) return session;
