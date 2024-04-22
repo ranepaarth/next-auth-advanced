@@ -6,6 +6,10 @@ import NextAuth from 'next-auth';
 import { getUserById } from './utils/user';
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
+  pages: {
+    signIn: '/auth/login',
+    error: '/auth/error',
+  },
   events: {
     async linkAccount({ user }) {
       await db.user.update({
