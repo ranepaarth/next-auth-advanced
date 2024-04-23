@@ -1,6 +1,7 @@
 'use server';
 
 import { db } from '@/lib/db';
+import { sendVerificationEmail } from '@/lib/mail';
 import { generateVerificationToken } from '@/lib/token';
 import { RegisterSchema } from '@/schemas';
 import { getUserByEmail } from '@/utils/user';
@@ -34,8 +35,9 @@ export async function registerAction(values: z.infer<typeof RegisterSchema>) {
     },
   });
 
-  // TODO: Send verification TOKEN email
   const verificationToken = await generateVerificationToken(email);
+
+  await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
   return {
     success: 'Confirmation email sent!',
