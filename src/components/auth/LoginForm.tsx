@@ -15,10 +15,12 @@ import {
 import { Input } from '@/components/ui/input';
 import { LoginSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
+import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import React, { useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
+import { Button } from '../ui/button';
 
 export function LoginForm() {
   const searchParams = useSearchParams();
@@ -86,6 +88,14 @@ export function LoginForm() {
                   <FormControl>
                     <Input {...field} placeholder='******' type='password' />
                   </FormControl>
+                  <Button
+                    variant={'link'}
+                    size={'sm'}
+                    asChild
+                    className='px-0 font-normal'
+                  >
+                    <Link href={'/auth/reset-password'}>Forgot Password?</Link>
+                  </Button>
                   <FormMessage />
                 </FormItem>
               )}
