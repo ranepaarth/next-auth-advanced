@@ -69,6 +69,13 @@ model ResetPasswordToken {
   expires     DateTime
 }
 
+model TwoFactorToken {
+  id          String  @id @default(cuid())
+  email       String  @unique
+  token       String  @unique
+  expires     DateTime
+}
+
 model TwoFactorConfirmation{
   id String @id @default(cuid())
   userId String @unique
