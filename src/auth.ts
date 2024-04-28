@@ -1,9 +1,10 @@
 import authConfig from '@/auth.config';
 import { db } from '@/lib/db';
+import { getUserById } from '@/utils/user';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { UserRole } from '@prisma/client';
 import NextAuth from 'next-auth';
-import { getUserById } from './utils/user';
+import { getTwoFactorConfirmationByUserId } from '@/utils/tow-factor-confirmation';
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   pages: {
@@ -30,7 +31,22 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       // Prevent user from signing in with credentials if emailVerified field is null or false
       if (!existingUser?.emailVerified) return false;
 
-      // TODO: Add 2FA check
+      // Done: Add 2FA check
+      if (existingUser.isTwoFactorEnabled) {
+        const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
+          existingUser.id,
+        );
+
+        if (!twoFactorConfirmation) return false;
+
+        // Done: Delete two factor confirmation for next sign in
+        await db.twoFactorConfirmation.delete({
+          where: {
+            id: twoFactorConfirmation.id,
+          },
+        });
+      }
+
       return true;
     },
     session: async ({ session, token }) => {
