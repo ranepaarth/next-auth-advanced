@@ -1,10 +1,10 @@
 import authConfig from '@/auth.config';
 import { db } from '@/lib/db';
+import { getTwoFactorConfirmationByUserId } from '@/utils/tow-factor-confirmation';
 import { getUserById } from '@/utils/user';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { UserRole } from '@prisma/client';
 import NextAuth from 'next-auth';
-import { getTwoFactorConfirmationByUserId } from '@/utils/tow-factor-confirmation';
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   pages: {
@@ -57,6 +57,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (token.role && session.user) {
         session.user.role = token.role as UserRole;
       }
+      if (token.isTwoFactorEnabled && session.user) {
+        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
+      }
       return session;
     },
     jwt: async ({ token }) => {
@@ -64,6 +67,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       const user = await getUserById(token.sub as string);
       if (!user) return token;
       token.role = user.role;
+      if (user.isTwoFactorEnabled) {
+        token.isTwoFactorEnabled = user.isTwoFactorEnabled;
+      }
       return token;
     },
   },
