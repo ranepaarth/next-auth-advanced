@@ -29,3 +29,14 @@ export const sendResetPasswordEmail = async (email: string, token: string) => {
     }) as ReactElement,
   });
 };
+
+export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
+  await resend.emails.send({
+    from: 'Paarth-Rane <onboarding@resend.dev>',
+    to: email,
+    subject: 'Next-auth V5: Two-Factor Authentication',
+    react: EmailTemplate({
+      twoFactorToken: token,
+    }) as ReactElement,
+  });
+};
