@@ -13,21 +13,19 @@ export const sendVerificationEmail = async (email: string, token: string) => {
     subject: 'Next-auth V5: Verification Email',
     react: EmailTemplate({
       verificationLink: confirmationLink,
-      isPasswordResetEmail: false,
     }) as ReactElement,
   });
 };
 
 export const sendResetPasswordEmail = async (email: string, token: string) => {
-  const resetPasswordLink = `http://localhost:3000/auth/new-password?reset-token=${token}`;
+  const passwordResetLink = `http://localhost:3000/auth/new-password?reset-token=${token}`;
 
   await resend.emails.send({
     from: 'Paarth-Rane <onboarding@resend.dev>',
     to: email,
     subject: 'Next-auth V5: Password Reset',
     react: EmailTemplate({
-      verificationLink: resetPasswordLink,
-      isPasswordResetEmail: true,
+      passwordResetLink,
     }) as ReactElement,
   });
 };

@@ -1,13 +1,13 @@
 import React from 'react';
 
 interface EmailTemplateProps {
-  verificationLink: string;
-  isPasswordResetEmail: boolean;
+  verificationLink?: string;
+  passwordResetLink?: string;
 }
 
 export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
   verificationLink,
-  isPasswordResetEmail,
+  passwordResetLink,
 }) => (
   <div>
     <h1>Next-auth V5</h1>
@@ -17,11 +17,12 @@ export const EmailTemplate: React.FC<Readonly<EmailTemplateProps>> = ({
       necessitatibus reiciendis vero, officiis perspiciatis tempora. Tempore
       modi, minus tenetur iste repellendus nihil.
     </p>
-    {isPasswordResetEmail ? (
+    {passwordResetLink && (
       <h3>
-        <a href={verificationLink}>Reset</a> your password.
+        <a href={passwordResetLink}>Reset</a> your password.
       </h3>
-    ) : (
+    )}
+    {verificationLink && (
       <h3>
         <a href={verificationLink}>Verify</a> your email.
       </h3>
