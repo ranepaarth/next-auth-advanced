@@ -1,8 +1,12 @@
 import { auth } from '@/auth';
 
-const getUser = async () => {
+export const getUser = async () => {
   const session = await auth();
   return session?.user;
 };
 
-export default getUser;
+
+export const getUserRole = async () => {
+  const session = await auth();
+  return session?.user.role;
+}
