@@ -1,4 +1,4 @@
-import getUser from '@/lib/getUser';
+import { getUser } from '@/lib/getUser';
 import React from 'react';
 import UserInfo from '../_components/UserInfo';
 
