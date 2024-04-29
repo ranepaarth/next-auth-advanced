@@ -5,6 +5,7 @@ import { getUserById } from '@/utils/user';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import { UserRole } from '@prisma/client';
 import NextAuth from 'next-auth';
+import { getAccountById } from './utils/account';
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   pages: {
@@ -60,16 +61,25 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (token.isTwoFactorEnabled && session.user) {
         session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
       }
+      if (session.user) {
+        session.user.name = token.name;
+        session.user.email = token.email as string;
+        // attach isOAuth property on session to display different settings for user logged via OAuth providers
+        session.user.isOAuth = token.isOAuth as boolean;
+      }
       return session;
     },
     jwt: async ({ token }) => {
       if (!token.sub) return token;
       const user = await getUserById(token.sub as string);
       if (!user) return token;
+      const existingAccount = await getAccountById(user.id);
+
       token.role = user.role;
-      if (user.isTwoFactorEnabled) {
-        token.isTwoFactorEnabled = user.isTwoFactorEnabled;
-      }
+      token.name = user.name;
+      token.email = user.email;
+      token.isTwoFactorEnabled = user.isTwoFactorEnabled;
+      token.isOAuth = !!existingAccount;
       return token;
     },
   },
