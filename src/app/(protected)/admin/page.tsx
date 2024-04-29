@@ -1,5 +1,5 @@
 import RoleGate from '@/components/auth/RoleGate';
-import { Button } from '@/components/ui/button';
+import { FormSuccess } from '@/components/FormSuccess';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { UserRole } from '@prisma/client';
 import React from 'react';
@@ -13,7 +13,9 @@ const AdminPage = () => {
         🔑Admin
       </CardHeader>
       <CardContent className='space-y-4'>
-        <RoleGate allowedRole={UserRole.ADMIN} />
+        <RoleGate allowedRole={UserRole.ADMIN}>
+          <FormSuccess message={'You can view this content as an Admin'} />
+        </RoleGate>
         <div className='flex flex-row items-center justify-between rounded-md border p-3 shadow-md'>
           <p className='text-sm font-medium'>Admin only API route</p>
           <ApiCallBtn />
