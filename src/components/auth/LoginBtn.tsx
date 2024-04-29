@@ -1,5 +1,7 @@
 'use client';
 
+import { LoginForm } from '@/components/auth/LoginForm';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
@@ -16,7 +18,14 @@ function LoginBtn({ children, mode = 'redirect', asChild }: LoginBtnProps) {
   };
 
   if (mode === 'modal') {
-    return <span>TODO: add modal</span>;
+    return (
+      <Dialog>
+        <DialogTrigger asChild={asChild}>{children}</DialogTrigger>
+        <DialogContent className='w-auto border-none bg-transparent p-0'>
+          <LoginForm />
+        </DialogContent>
+      </Dialog>
+    );
   }
 
   return (
