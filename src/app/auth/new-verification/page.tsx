@@ -1,8 +1,13 @@
+import FallBack from '@/components/auth/FallBack';
 import NewVerificationForm from '@/components/auth/NewVerificationForm';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 function NewVerification() {
-  return <NewVerificationForm />;
+  return (
+    <Suspense fallback={<FallBack />}>
+      <NewVerificationForm />
+    </Suspense>
+  );
 }
 
 export default NewVerification;
