@@ -71,7 +71,7 @@ function Settings() {
       form.setValue('role', 'USER');
     }
     console.log(form.getValues('role'));
-  }, [user, form.setValue]);
+  }, [user, form]);
 
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
     console.log(values);

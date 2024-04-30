@@ -10,7 +10,7 @@ interface RoleGateProps {
   allowedRole: UserRole;
 }
 
-const RoleGate = async ({ children, allowedRole }: RoleGateProps) => {
+const RoleGate = ({ children, allowedRole }: RoleGateProps) => {
   const role = useCurrentUserRole();
 
   if (role !== allowedRole) {

@@ -30,7 +30,7 @@ function NewVerificationForm() {
       .catch(() => {
         setError('Something went wrong!');
       });
-  }, []);
+  }, [searchParams,token]);
 
   useEffect(() => {
     onSubmit();
