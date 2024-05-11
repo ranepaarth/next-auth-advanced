@@ -10,6 +10,7 @@ import {
   CardHeader,
 } from '@/components/ui/card';
 import React from 'react';
+import SocialLinks from './SocialLinks';
 
 interface CardWrapperProps {
   children: React.ReactNode;
@@ -40,6 +41,7 @@ export function CardWrapper({
       <CardFooter>
         <BackBtn label={backButtonLabel} href={backButtonHref} />
       </CardFooter>
+      <SocialLinks />
     </Card>
   );
 }
