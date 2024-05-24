@@ -63,7 +63,7 @@ RESEND_API_KEY={RESEND_API_TOKEN}
 ## Usage
 1. Start development server `npm run dev`
 2. Get your prisma studio up and running using `npx prisma studio` command and visit [http://localhost:5555](http://localhost:5555) to start editing in your database. 
-3. Open your Browser and visit [http://localhost:300](http://localhost:300) to view the website
+3. Open your Browser and visit [http://localhost:3000](http://localhost:300) to view the website
 
 ## Concepts covered
 
